@@ -32,10 +32,11 @@ addEventHandler("onResourceStop", resourceRoot, function()
 end)
 
 -- commands
-addCommandHandler("lista-warpow", function(plr, cmd)
-	if not warps then 
-		outputChatBox("Wystapil blad, prosimy sprobowac pozniej.", plr)
-		return
+addCommandHandler("warp", function(plr, cmd, arg)
+	if not arg or arg ~= "lista" then return end
+
+	if not warps then
+		outputChatBox("Lista warpów jest pusta.")
 	end
 
 	local tmpWarps={}
@@ -77,11 +78,12 @@ addCommandHandler("warp", function(plr, cmd, warpName)
 			fadeCamera(plr, true)
 		end, 2500, 1, plr, curWarp)
 	else
-		outputChatBox("Nie znaleziono teleportu. Aby sprawdzic listę wszystkich warpów wpisz /lista-warpow", plr)
+		outputChatBox("Nie znaleziono teleportu. Aby sprawdzić listę wszystkich warpów wpisz /warp lista", plr)
 	end
 end)
 
-addCommandHandler("reload-warp", function(plr, cmd)
+addCommandHandler("warp", function(plr, cmd, arg)
+		if not arg or arg ~= "reoald" then return end
 	--[[
 	Dla korzystajacych z uprawnien ACL i wbudowanego mechanizmu kont.
 
@@ -94,10 +96,11 @@ addCommandHandler("reload-warp", function(plr, cmd)
 
 	warps=nil
 	loadTheWarps()
-	outputChatBox("Pomyslnie przeladowano warpy (obecnie: ".. #warps .. ")", plr)
+	outputChatBox("Pomyślnie przeładowano warpy (obecnie: ".. #warps .. ")", plr)
 end)
 
-addCommandHandler("add-warp", function(plr, cmd, warpName)
+addCommandHandler("warp", function(plr, cmd, warpName, arg)
+		if not arg or arg ~= "add" then return end
 	--[[
 	Dla korzystajacych z uprawnien ACL i wbudowanego mechanizmu kont.
 
@@ -109,7 +112,7 @@ addCommandHandler("add-warp", function(plr, cmd, warpName)
 	]]
 
 	if not warpName then
-		outputChatBox("Blad! Nie wpisano nazwy warpu.", plr)
+		outputChatBox("Błąd, nie została podana nazwa warpu.", plr)
 		return
 	end
 
@@ -127,5 +130,5 @@ addCommandHandler("add-warp", function(plr, cmd, warpName)
 
 	warps=nil
 	loadTheWarps()
-	outputChatBox("Stworzono warp: " .. warpName .. ".", plr)
+	outputChatBox("Stworzono warp, o nazwie " .. warpName .. ".", plr)
 end)
